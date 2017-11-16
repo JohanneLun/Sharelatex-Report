@@ -4,8 +4,12 @@
 \subsection{Power Spectral Density estimate}
 In this subsection we want to find the Power Spectral Density (PSD) of the wave,$\psi_w$, $S_{\psi_w}(\omega)$
 \newline
-To calculate the PSD the matlabfunction pwelch was used. This finction returns the PSD estimate, pxx, of the input in the given the column of 
-Sample Frequency = 10 Hz. Window = 4096. $\psi_w[deg]$. $[P_{xx} , f] = $\texttt{pwelch}($x_2$, window, noverlap, nfft, fs). Since the fs is given in Hz. Må konvergere $P_{xx}$ must be multiplied with $\frac{1}{2\pi}$ to get [s/rad], and f is multiplied by $2\pi$ to get [rad/s].
+To calculate the PSD the matlabfunction [pxx,f]= pwelch was used. This function returns the PSD estimate, pxx, and a frequency vector. 
+ $[P_{xx} , f] = $\texttt{pwelch}($x_2$, window, noverlap, nfft, fs). 
+ The noverlap is used to overlap from segment to segment. The default of the noverlap is 50\% of the window length. 
+ Nttf is for specifies the numbers of discrete Fourier transform to use in the estimation. 
+ In the matlab code we sat the input sequence to: $psi_w(2,:)$ this to get the data from wave.mat that influence the waves have on the compass measurement. This data was given in degrees, so we multiplied with pi/180 to get the data in radiance, since the fs is given in radiance
+ Sample Frequency = 10 Hz. Window = 4096. 
 \newline
 
 MATLAB, plots, grafer og kode.

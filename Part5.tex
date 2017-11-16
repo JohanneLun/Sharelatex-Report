@@ -1,13 +1,12 @@
 
 \section{Discrete Kalman Filter} \label{sec:part5}
-In this section we have implemented a discrete Kalman filter to estimate the bias $b$, the heading $\psi$ and the high-frequency wave induced  motion on the heading $\psi_w$. We do this to be able to remove $\psi_w$ from the control loop to avoid wear and tear on the actuator system, because we do not want the rudder to try to compensate for $\psi_w$. Hence we do what is called wave filtering, where we only use the estimated $\psi$ in the control law. 
+In this part a discrete Kalman filter is implemented to estimate the bias b and the heading $\psi$. The high-frequented wave induced motion $\psi_m$ is also estimated, but this must be removed from the control loop to avoid wear and tear on the actuator system.  
 
 We continue to be careful not to make $\psi$ bigger than $\pm 35 \circ$ and small deviations in compass value. \todo{husk å nevne i d og e}
 
 \subsection{Exact discretization}
-Here we discretize the model \ref{eq:state_space} with the matrices found earlier in EQ-REFERANSE using exact discretization, with a sample frequency of 10 Hz.  
+To use a discrete Kalman filter, a discretized system is needed. The matrices A, B and E found in \ref{sec:part4-1} was put into MATLAB and the function a2d() was used to get an exact discretization of the system. 
 
-We discretize A, B and E, because C and D will remain the same as shown in REFERANSE TIL HVOR DET STÅR I BOKA
 
 \subsection{Estimate of measurement noise variance}
 To find the estimate of the variance of the measurement noise we used the Matlab function \texttt{var}.

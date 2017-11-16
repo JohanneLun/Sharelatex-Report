@@ -15,13 +15,17 @@
 \usepackage{float}
 \usepackage{import}
 \usepackage{mathtools}
-\usepackage{minted}
+%\usepackage{minted}
+\usepackage[newfloat]{minted}
 
 \sisetup{exponent-product =  } % Prikk som multiplikasjonstegn (i steden for kryss).
 \sisetup{output-decimal-marker  =  {,}} % Komma som desimalskilletegn (i steden for punktum).
 \sisetup{separate-uncertainty = true} % Pluss-minus-form på usikkerhet (i steden for parentes). 
 \usepackage{booktabs} % For å få tilgang til finere linjer (til bruk i tabeller og slikt).
 \usepackage[font=small,labelfont=bf]{caption} % For justering av figurtekst og tabelltekst.
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Source Code}
 
 % Disse kommandoene kan gjøre det enklere for LaTeX å plassere figurer og tabeller der du ønsker.
 \setcounter{totalnumber}{20}

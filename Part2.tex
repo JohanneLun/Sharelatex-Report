@@ -3,19 +3,19 @@
 
 \subsection{Power Spectral Density estimate}
 In this subsection we want to find the Power Spectral Density (PSD) of the wave,$\psi_w$, $S_{\psi_w}(\omega)$
-\newline
-To calculate the PSD the matlabfunction [pxx,f]= pwelch was used. This function returns the PSD estimate, pxx, and a frequency vector. 
+\bigskip
+To calculate the PSD the matlabfunction [pxx,f]= pwelch was used. This function returns the PSD estimate, pxx, and a frequency vector.\bigskip 
  $[P_{xx} , f] = $\texttt{pwelch}($x_2$, window, noverlap, nfft, fs). 
  The noverlap is used to overlap from segment to segment. The default of the noverlap is 50\% of the window length. 
  Nttf is for specifies the numbers of discrete Fourier transform to use in the estimation. 
  In the matlab code we sat the input sequence to: $psi_w(2,:)$ this to get the data from wave.mat that influence the waves have on the compass measurement. This data was given in degrees, so we multiplied with pi/180 to get the data in radiance, since the fs is given in radiance
- Sample Frequency = 10 Hz. Window = 4096. 
+ Sample Frequency was given as 10 Hz and the window was 4096.
+ See \cref{mat:5.2.a}
 \newline
 
-MATLAB, plots, grafer og kode.
 
 \subsection{Analytic expression for transfer function and PSD}
-Oppg: Find an analytic expression for the transfer function of the wave response model (from $w_w$ to $\psi_w$). Also find an analytic expression for the Power Spectral Density function of $\psi_w$, that is $P_{\psi_w}(\omega)$.
+In this subsection the task was to find an analytic expression for the transfer function of the wave response model (from $w_w$ to $\psi_w$). Ans also find an analytic expression for the Power Spectral Density function of $\psi_w$, that is $P_{\psi_w}(\omega)$.
 
 Using the same techniques as earlier to find the transfer function from $w_w$ to $\psi_w$ using \cref{eq:xidot_def} 
 \begin{equation*}

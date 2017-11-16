@@ -3,14 +3,14 @@
 In this section we want to design an autopilot for the ship. Which means we want to be able to choose an angle $\psi_r$ and the ship will follow this course. The model of the boat holds only for small deviations for the compass value. This means the compass value cannot be more than $\pm 35^{\circ}$. We used $\psi_r = 30$ in all the following simulations. 
 
 \subsection{PD controller}
-In this subsection we start by designing a PD-controller in the form, 
+In this subsection we start by designing a PD-controller in the form,
 \begin{equation}
 \begin{split}
    H_{pd}(s) = K_{pd} \frac{1+T_d s}{1+T_f s}
 \end{split} ¨
 \label{eq:transferfunk}
 \end{equation}
-, we base (\ref{eq:transferfunk}) on the transferfunction from $\delta$ to $\psi$ and assume that the disturbances are negligible. We let $\omega_c$ and the phase margin, $\varphi$, of the open loop system, $H_{pd}(s) \cdot H_{ship}(s)$, be approximately $0.10 \  (rad/s)$ and 50 degrees, respectively. The systems transferfunction then becomes 
+we base (\ref{eq:transferfunk}) on the transferfunction from $\delta$ to $\psi$ and assume that the disturbances are negligible. We let $\omega_c$ and the phase margin, $\varphi$, of the open loop system, $H_{pd}(s) \cdot H_{ship}(s)$, be approximately $0.10 \  (rad/s)$ and 50 degrees, respectively. The systems transferfunction then becomes 
 \begin{equation}
 \begin{split}
     H_0(s) &= H_{pd}(s) \cdot H_{ship}(s) \\

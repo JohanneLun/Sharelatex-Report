@@ -1,0 +1,45 @@
+
+\section{Observability} \label{sec:part4}
+Here we look at the matrices of the system to check the  observability in different scenarios, such as with and without different disturbances. 
+
+\subsection{State space model matrices A, B, C and E}
+Using the system in \cref{eq:state_space} with \textbf{x}, u and \textbf{w} as given, we get
+
+\begin{equation}
+    \boldsymbol{A} = \begin{bmatrix}
+        0 & 1 & 0 & 0 & 0 \\
+        -\omega_0^2 & -2\lambda \omega_0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & -\frac{1}{T} & -\frac{K}{T} \\
+        0 & 0 & 0 & 0 & 0 
+    \end{bmatrix} \ , \ \boldsymbol{B} = \begin{bmatrix}
+        0 \\ 0 \\ 0 \\ \frac{K}{T} \\ 0
+    \end{bmatrix}\ , \ \boldsymbol{E} = \begin{bmatrix}
+        0 & 0 \\
+        K_w & 0 \\
+        0 & 0 \\
+        0 & 0 \\
+        0 & 1 
+    \end{bmatrix}
+\end{equation}
+\begin{equation}
+    \boldsymbol{C} = \begin{bmatrix}
+        0 & 1 & 1 & 0 & 0 \\
+    \end{bmatrix}
+\end{equation}
+
+\subsection{Without disturbances}
+Below is the code used to calculate if the observer matrix has full rank. 
+\inputminted[linenos]{matlab}{Part4_pics/p4_til_rapport.m}
+
+By using the above Matlab code we get that the system is observable with $rank = 2$, when we discard all disturbances.
+
+HVA KAN GI NOT FULL RANK??
+\subsection{Current disturbance}
+When we only have current disturbance the system is still observable with full rank.  
+
+\subsection{Wave disturbance}
+With only wave disturbance the system is observable with full rank.
+
+\subsection{Wave and current disturbances}
+Using all the disturbances the system has $rank = 5$ and is observable.

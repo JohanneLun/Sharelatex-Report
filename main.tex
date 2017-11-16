@@ -1,0 +1,88 @@
+
+% Definerer her egenskaper til dokumentet
+\documentclass[11pt,a4paper]{article} % Alternativet er å bruke {report}, men vi holder oss helst til {article} i labrapportene.
+
+\usepackage[T1]{fontenc} % Vise norske tegn.
+\usepackage[utf8]{inputenc} % For å kunne skrive norske tegn.
+\usepackage{graphicx}  
+\usepackage{epstopdf} % For å inkludere figurer.
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{amsmath} % Ekstra matematikkfunksjoner.
+\usepackage{amssymb}
+\usepackage{siunitx} % Må inkluderes for blant annet å få tilgang til kommandoen \SI (korrekte måltall med enheter)
+\usepackage{fullpage} % Standarisert tynn kant
+\usepackage{float}
+\usepackage{import}
+\usepackage{mathtools}
+\usepackage{minted}
+
+\sisetup{exponent-product =  } % Prikk som multiplikasjonstegn (i steden for kryss).
+\sisetup{output-decimal-marker  =  {,}} % Komma som desimalskilletegn (i steden for punktum).
+\sisetup{separate-uncertainty = true} % Pluss-minus-form på usikkerhet (i steden for parentes). 
+\usepackage{booktabs} % For å få tilgang til finere linjer (til bruk i tabeller og slikt).
+\usepackage[font=small,labelfont=bf]{caption} % For justering av figurtekst og tabelltekst.
+
+% Disse kommandoene kan gjøre det enklere for LaTeX å plassere figurer og tabeller der du ønsker.
+\setcounter{totalnumber}{20}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\floatpagefraction}{0.35}
+\numberwithin{equation}{section}
+
+\usepackage{todonotes} % sett inn [disable] etter \usepackage men før {}, før man leverer rapporten så skal alle forsvinne.
+%\usepackage{booktabs} % Better tables. Provides \toprule, \midrule, \bottomrule.
+\usepackage{listings} % Provides source code listings.
+\usepackage{hyperref} % Provides clickable links. Always load last, but before cleveref.
+\usepackage{cleveref} % Provides the \Cref command, for cross-referencing of equations, sections, figures and tables. Always load last.
+
+\title{Boat lab Report}
+\author{Group 51 \\ Are Fossli Viberg 756388 \\ Johanne Kalland 768709\\ Karoline Halvorsen 765265 }
+\date{October 2017}
+
+\begin{document}
+
+\begin{titlepage}
+    \maketitle
+    \rule{\linewidth}{0.5mm}
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Figures/logontnu_eng.pdf}
+    \end{figure}
+    \thispagestyle{empty}
+\end{titlepage} 
+
+\newpage
+%innholdsfortegnelse
+\tableofcontents
+\thispagestyle{empty} %Avoid page numbering on the table of contents
+
+% - https://github.com/PerKjelsvik/TTK4115-LinSys/tree/master/BoatLab
+% - https://github.com/sindrehan/TTK4115-Boatlab
+% - https://github.com/mjansrud/TTK4115-Cargo-ship
+% - https://github.com/larsgus/TTK4115-Gruppe-6
+% - https://github.com/kjetisg/TTK4115-LinearSystems/tree/master/BoatLab
+
+
+\newpage
+\import{sections/}{Introduction.tex}
+\newpage
+\import{sections/}{Preliminary.tex}
+\newpage
+\import{sections/}{Part1.tex}
+\newpage
+\import{sections/}{Part2.tex}
+\newpage
+\import{sections/}{Part3.tex}
+\newpage
+\import{sections/}{Part4.tex}
+\newpage
+\import{sections/}{Part5.tex}
+\newpage
+\import{sections/}{Appendix.tex}
+\newpage
+\import{sections/}{References.bib}
+
+
+\end{document}

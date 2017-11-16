@@ -1,0 +1,58 @@
+
+\section{Discrete Kalman Filter} \label{sec:part5}
+In this section we have implemented a discrete Kalman filter to estimate the bias $b$, the heading $\psi$ and the high-frequency wave induced  motion on the heading $\psi_w$. We do this to be able to remove $\psi_w$ from the control loop to avoid wear and tear on the actuator system, because we do not want the rudder to try to compensate for $\psi_w$. Hence we do what is called wave filtering, where we only use the estimated $\psi$ in the control law. 
+
+We continue to be careful not to make $\psi$ bigger than $\pm 35 \circ$ and small deviations in compass value. \todo{husk å nevne i d og e}
+
+\subsection{Exact discretization}
+Here we discretize the model \ref{eq:state_space} with the matrices found earlier in EQ-REFERANSE using exact discretization, with a sample frequency of 10 Hz.  
+
+We discretize A, B and E, because C and D will remain the same as shown in REFERANSE TIL HVOR DET STÅR I BOKA
+
+\subsection{Estimate of measurement noise variance}
+To find the estimate of the variance of the measurement noise we used the Matlab function \texttt{var}.
+\newline
+
+\label{eq:noise_vaiance} %label til varaince of the measurement noise i 5.5.b)
+
+MATLAB KODE
+
+\subsection{Implementation of discrete Kalman filter}
+Now we let 
+\begin{equation}
+    \boldsymbol{w} = [w_w \ w_b]^T \ , \ E\{\boldsymbol{w w^T}\} = \boldsymbol{Q} = \begin{bmatrix}
+        30 & 0 \\
+        0 & 10^{-6} 
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \boldsymbol{P_0^-} = \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 \\
+        0 & 0.013 & 0 & 0 & 0 \\
+        0 & 0 & \pi^2 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 0 & 2.5 \cdot 10^{-3} 
+    \end{bmatrix} \ , \ \boldsymbol{x_0^-} = \begin{bmatrix}
+        0 \\ 0 \\ 0 \\ 0 \\ 0 \\
+    \end{bmatrix}
+\end{equation}
+where \textbf{w} is the process noise, \textbf{Q} is the process noise covariance and $\boldsymbol{\hat{x}_0^-}$ is the initial a priori state estimate. Sice the process is sampled, $E(v^2) = R$ equals the measurement noise variance found in \cref{eq:noise_vaiance} divided by the sample interval. 
+\newline
+
+Implemented the dicrete Kalman filter using ... En av to metoder. \newline
+
+Fra OPPGAVETEKST: Traditionally, s-functions are better suited for dynamic systems since they facilitate initialization, termination and updates at a given frequency. The Matlab function block is designed for static systems, so it does not have the same overhead as s-functions. This makes Matlab function seem easier, but it also require some additional work to set up the initialization of the Kalman filter. Hint: Let the compass measurement and the rudder input be input to the Kalman filter function and the output be the a posteriori estimate of $\psi$ and b. Also put a zero order hold on the compass measurement and the rudder command, since the process and controller are continuous. Use the same sampling frequency as above. Use the update expression (4.2.11) in Brown\&Hwang 
+
+
+\subsection{Simulation with current disturbance with feed forward}
+Using $\psi_r = 30$ and making a feed forward from the estimated bias such that the bias is cancelled makes ... Simulating the system with a current disturbance, makes the autopilot have a BETTER ?? performance than the equivalent simulation in 5.3.c) LABEL? ELABORATE
+\newline
+
+INCLUDE PLOTS OF BOTH MEASURED AND FILTERED COMPASS COURSE, RUDDER INPUT AND ESTIMATED BIAS. AND PLOTS OF ACTUAL WAVE INFLUENCE AND ESTIMATED WAVE INFLUENCE.
+
+\subsection{Simulation with wave and current disturbance and wave filtering}
+Here we use the wave filtered $\psi$ instead of the measured heading in the autopilot. Simulating the system with both wave and current disturbance, gives .?.?... The autopilot performs BETTER?? than the equivalent simulation in problem 5.3.d). ELABORATE
+\newline
+
+INCLUDE PLOTS OF BOTH MEASURED AND FILTERED COMPASS COURSE, RUDDER INPUT AND ESTIMATED BIAS. AND PLOTS OF ACTUAL WAVE INFLUENCE AND ESTIMATED WAVE INFLUENCE.

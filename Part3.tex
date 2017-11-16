@@ -1,0 +1,77 @@
+\section{Control System Design} \label{sec:part3}
+\todo{Legg til bodediagram}
+In this section we want to design an autopilot for the ship. Which means we want to be able to choose an angle $\psi_r$ and the ship will follow this course. The model of the boat holds only for small deviations for the compass value. This means the compass value cannot be more than $\pm 35^{\circ}$. We used $\psi_r = 30$ in all the following simulations. 
+
+\subsection{PD controller}
+In this subsection we start by designing a PD-controller in the form, 
+\begin{equation}
+\begin{split}
+   H_{pd}(s) = K_{pd} \frac{1+T_d s}{1+T_f s}
+\end{split} ¨
+\label{eq:transferfunk}
+\end{equation}
+, we base (\ref{eq:transferfunk}) on the transferfunction from $\delta$ to $\psi$ and assume that the disturbances are negligible. We let $\omega_c$ and the phase margin, $\varphi$, of the open loop system, $H_{pd}(s) \cdot H_{ship}(s)$, be approximately $0.10 \  (rad/s)$ and 50 degrees, respectively. The systems transferfunction then becomes 
+\begin{equation}
+\begin{split}
+    H_0(s) &= H_{pd}(s) \cdot H_{ship}(s) \\
+    &= K_{pd} \frac{K + KT_d s}{s^3 T T_f +s^2(T + T_f) + s}
+\end{split}
+\end{equation}
+\bigskip
+Want $T_d$ to cancels the transfer function time constant
+\begin{align*}
+    1 + T_d s &= 1 + Ts \\
+    T_d &= T
+\end{align*}
+The transferfunction becomes, 
+\begin{equation}
+\begin{split}
+   H_{0}(s) = K_{pd} \frac{K}{(1+T_f s)s}
+\end{split} 
+\end{equation}
+To find the coefficient $T_f$ and $K_{pd}$, the cut-off frequency was given $\omega_c = 0.10 \ (rad/s)$, we solved the equation 
+\begin{equation}
+    \begin{split}
+        1 = |H_0(j\omega_{c})|
+    \end{split}
+\end{equation}
+\begin{equation}
+    \begin{split}
+      \varphi = 180 - \angle H_0(j\omega_c)
+    \end{split}
+\end{equation}
+
+giving the expression for $T_f$ as
+\begin{equation}
+    T_f = \frac{1}{\omega_c\tan(\varphi*pi/180)}= 8.39099 
+\end{equation}
+then the value for $K_{pd}$ is easly calculated form 
+\begin{equation}
+    K_{pd} = \frac{\sqrt{\omega_c^2 + T_f^2 \omega_c^4}}{K}= 0.836263
+\end{equation}
+\todo{vise hvor mye faseforskyvning før systemet blir ustabilt}
+
+
+
+
+
+
+
+
+
+
+\subsection{Simulation of the autopilot}
+Simulating the system without disturbances, except for measurement noise, we see that the autopilot manages to keep the reference, at $30^\circ$. For the Simulink- diagrams, see appendix \ref{sec:simulink_diagrams_3}
+
+
+
+
+Then simulating the system with a current disturbance, but still not with wave disturbances, we have that the systems autopilot has a standard deviation equal to 3.5 degrees.
+
+
+
+Simulating the system with a wave disturbance, but no current disturbances, we have a lot of noise, making it harder for the autopilot. But, it managed to keep the course. 
+
+
+\bigskip
+

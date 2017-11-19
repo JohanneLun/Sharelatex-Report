@@ -2,17 +2,9 @@
 \section{Identification of wave spectrum model} \label{sec:part2}
 
 \subsection{Power Spectral Density estimate}
-In this subsection we want to find the Power Spectral Density (PSD) of the wave,$\psi_w$, $S_{\psi_w}(\omega)$
-\bigskip
-To calculate the PSD the matlabfunction [pxx,f]= pwelch was used. This function returns the PSD estimate, pxx, and a frequency vector.\bigskip 
- $[P_{xx} , f] = $\texttt{pwelch}($x_2$, window, noverlap, nfft, fs). 
- The noverlap is used to overlap from segment to segment. The default of the noverlap is 50\% of the window length. 
- Nttf is for specifies the numbers of discrete Fourier transform to use in the estimation. 
- In the matlab code we sat the input sequence to: $psi_w(2,:)$ this to get the data from wave.mat that influence the waves have on the compass measurement. This data was given in degrees, so we multiplied with pi/180 to get the data in radiance, since the fs is given in radiance
- Sample Frequency was given as 10 Hz and the window was 4096.
- See \cref{mat:5.2.a}
-\newline
-
+In this subsection we want to find the Power Spectral Density (PSD) of the wave,$\psi_w$, $S_{\psi_w}(\omega)$. To calculate the PSD the matlabfunction \textit{pwelch} was used. This function returns the Welch's PSD estimate, pxx, and a frequency vector, \cite{pwelch}.
+\newline 
+The following version was used $[p_{xx} , f] =  $\texttt{pwelch}($x_2$, window, noverlap, nfft, fs). The noverlap is used to overlap from segment to segment. The default of the noverlap is 50\% of the window length. Nfft is for specifies the numbers of discrete Fourier transform to use in the estimation. In the Matlab code we made the input sequence to: $psi_w(2,:)$, this to get the data from wave.mat that influence the waves have on the compass measurement. This data was given in degrees, so to get it in radians it was multiplied with pi/180  since the fs is given in radians. The sample frequency was given as 10 Hz and the window was 4096. The code used can be seen in \cref{mat:5.2.a}
 
 \subsection{Analytic expression for transfer function and PSD}
 In this subsection the task was to find an analytic expression for the transfer function of the wave response model (from $w_w$ to $\psi_w$). Ans also find an analytic expression for the Power Spectral Density function of $\psi_w$, that is $P_{\psi_w}(\omega)$.
@@ -25,59 +17,49 @@ with $\xi_w(0) = 0$, inserting into \cref{eq:psidot_m} and using some algebra sk
 \begin{equation} 
     H(s) =  \frac{\psi_{w}(s)}{w_{w}(s)} = \frac{s K_w}{s^2 + 2\lambda w_w s + \omega_0^2}
 \end{equation}
-\bigskip
-
-Power Spectral Density of $\psi_w \rightarrow P_{\psi_w}(\omega)$. Using Fourier transform. Know that white noise have zero-mean. Random process r(t) 
-
+Then H(s) is a stable transfer function, and the PSD for $\psi_w$ can be found though stationary analysis by using the formula under from \cite{brown12}
+%Power Spectral Density of $\psi_w \rightarrow P_{\psi_w}(\omega)$. Using Fourier transform. Know that white noise have zero-mean. Random process r(t) 
 \begin{equation}
 \begin{split}
-    P_{\psi_w}(\omega) &= |\hat{H}(j\omega)|^2 S_w(\omega) \\
-    &= \hat{H}(j\omega) \hat{H}(-j\omega) S_{\psi_w}(\omega)
+    P_{\psi_w}(\omega) &= |\hat{H}(j\omega)|^2 P_{\omega_w}(\omega)\\ 
+    &= H(j\omega)H(-j\omega) P_{\omega_w}({\omega})
 \end{split}
 \end{equation}
-where $S_w(j\omega) = 0$ 
-\newline
-
+The amplitude of $w_w$ is $P_w(j\omega)$, which is white noise, that is a constant and here is equal to 1. 
 \begin{equation}
 \begin{split}
     H(j\omega)H(-j\omega) &= \frac{j\omega K_w}{(j\omega)^2 + 2\lambda w_0 j\omega + \omega_0^2}*\frac{-j \omega K_w}{(-j\omega)^2 - 2\lambda w_0 j\omega + \omega_0^2} \\
     &= \frac{(\omega K_w)^2}{\omega^4 - 2\omega^2 \omega_0^2 + 4 \lambda^2 \omega_0^2 \omega^2 + \omega_0^4}
 \end{split}
 \end{equation} 
-
-White noise is only theoretic. You cannot get something that has infinite variance. 
-\begin{equation*}
-    S_w(\omega) = \mathbb{F} \{R_w(\tau)^2\} = 1 \ , \ R_w = \delta(\tau) \sigma^2 = \delta(t)
-\end{equation*} \todo{skal noen av disse være fancy krøllegreier}
-
-Er P og S av psi den samme funksjonen eller er P den analytiske og S den estimerte??
-
-
-
+Thus the PSD becomes 
+\begin{equation}
+\begin{split}
+   P_{\psi_w}(\omega)= \frac{(\omega K_w)^2}{\omega^4 - 2\omega^2 \omega_0^2 + 4 \lambda^2 \omega_0^2 \omega^2 + \omega_0^4}
+\end{split}
+\end{equation} 
 
 
 \subsection{Resonance frequency from estimated PSD} \label{sec:5.2.c}
-Oppg: Find $\omega_w$ from the estimated $S_{\psi_w}(\omega)$ in part a).
+In this subsection the task was to find $\omega_0$, from the estimated PSD found in Power Spectral Density estimate.
 \newline
-$\omega_0$ is the maximum of the power spectral density function, $S_{\psi_w}(\omega)$, which gives
+\newline
+The $\omega_0$ is the maximum of the power spectral density function, $S_{\psi_w}(\omega)$, and describes the frequency of waves that has the greatest impact on the head of the ship. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Part2_pics/p2c_omega0.eps}
+    \caption{Reading off $\omega_0$ from the estimated PSD found in 5.2.a}
+    \label{fig:p2c}
+\end{figure}
+From the figure it was easy to determine that $\omega_0$ was
 \begin{equation}
     \omega_0 = 0.7823
 \end{equation}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Part2_pics/p2c_omega0.eps}
-    \caption{Reading off $\omega_0$ from the estimated PSD found in 5.2.a}
-    \label{fig:p2c}
-\end{figure}
+
 
 \subsection{Damping factor $\lambda$} \label{sec:5.2.d}
-Oppg: To have a complete model for the wave response we need to identify the damping factor $\lambda$. Define $K_w = 2 \lambda \omega_0 \sigma$ where $\sigma^2$ is the peak value of $P_{\psi_w}(\omega)$. Find $\lambda$ by fitting the $P_{\psi_w}(\omega)$ to the estimate of the PSD, $S_{\psi_w}(\omega)$. Use trial and error. Alternatively, you may use curve-fitting methods in MATLAB (Hint: \texttt{doc lsqcurvefit}). Include plot for comparison manner.
-\newline
-
-Know that $K_w = \lambda \omega_0 \sigma$ where $\sigma^2$ is the peak value of $P_{\psi_w}(\omega)$. From looking at PLOTS from \cref{sec:5.2.c} we see that $y = 0.001482$. 
-
-Use the transferfunction for ??. After some trial and error we choose $\lambda$ to be 0.8 or 0.7.
+For completing the model of the wave response, the damping factor was to be determent, $\lambda$. In the task $K_w$ was defined as $2 \lambda \omega_0 \sigma$ where $\sigma^2$ was the peak value of $P_{\psi_w}(\omega)$. To solve this task we decided to use the trial and error method. By trying different values of $\lambda$ that fitted the $P_{\psi_w}(\omega)$ to the estimate of the PSD, we have whats show in \cref{fig:p2d1} - \ref{fig:p2d2}. The final pick for $\lambda$ was 0.07. In \cref{mat:5.2.a} it is shown how the PSD function was plotted. 
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}

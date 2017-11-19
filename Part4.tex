@@ -1,11 +1,12 @@
 
 \section{Observability} \label{sec:part4}
-Here we look at the matrices of the system to check the  observability in different scenarios, such as with and without different disturbances. 
+Here we look at the matrices of the system to check the  observability in different scenarios, such as with and without different disturbances. The matrix's was calculated in Matlab (\ref{mat:5.4.a}). 
+
 
 \subsection{State space model matrices A, B, C and E}\label{sec:part4-1}
 Using the system in \cref{eq:state_space} with \textbf{x}, u and \textbf{w} as given, we get
 
-\begin{equation}
+\begin{equation}\label{eq:ss_with_dist1}
     \boldsymbol{A} = \begin{bmatrix}
         0 & 1 & 0 & 0 & 0 \\
         -\omega_0^2 & -2\lambda \omega_0 & 0 & 0 & 0 \\
@@ -22,24 +23,120 @@ Using the system in \cref{eq:state_space} with \textbf{x}, u and \textbf{w} as g
         0 & 1 
     \end{bmatrix}
 \end{equation}
-\begin{equation}
-    \boldsymbol{C} = \begin{bmatrix}
+\begin{equation}\label{eq:ss_with_dist2}
+    \boldsymbol{C} = \begin{bmatrix} 
         0 & 1 & 1 & 0 & 0 \\
     \end{bmatrix}
 \end{equation}
 
 \subsection{Without disturbances}
-Below is the code used to calculate if the observer matrix has full rank. 
-\inputminted[linenos]{matlab}{Part4_pics/p4_til_rapport.m}
+For \cref{sec:part4-1} - \cref{sec:part4.5}, the observability matrix is used to study observability. It is defined as
+\begin{equation*}
+  \boldsymbol{\mathcal{O}} =
+  \begin{bmatrix}
+    \boldsymbol{C} \\
+    \boldsymbol{CA} \\
+    \boldsymbol{CA^2} \\
+    \vdots \\
+    \boldsymbol{CA^{n-2}} \\
+    \boldsymbol{CA^{n-1}} \\
+  \end{bmatrix} \\
+\end{equation*}
+where n is the number of state variables. In \cref{mat:5.4.a}, is the code used to calculate the observer matrix observability using \texttt{obsv(A,C)} and \texttt{rank(O)}. Examining the observability without disturbances, we see that all states affected by the disturbances disappear, and the remaining are $\psi$ and $r$. This gives the states space matrices as 
+\begin{equation}
+    A = 
+	\begin{bmatrix}
+    0 & 1            & 0\\
+	0 & -\frac{1}{T} & -\frac{K}{T}\\
+	0 & 0            & 0
+	\end{bmatrix} \ , \ \boldsymbol{B} =
+  \begin{bmatrix}
+	0 \\
+    \frac{K}{T} \\
+    0 \\
+  \end{bmatrix}
+  \qquad
+  C =
+  \begin{bmatrix}
+    1 & 0 & 0\\
+  \end{bmatrix}
+\end{equation}
+which gives the observability matrix as
+\begin{equation}
+  \boldsymbol{\mathcal{O}} =
+  \begin{bmatrix}
+    1 & 0 \\
+    0 & 1 \\
+  \end{bmatrix}
+\end{equation}
+From that we can see that the rank is equal to 2, and thus the system without disturbances is observable.
 
-By using the above Matlab code we get that the system is observable with $rank = 2$, when we discard all disturbances.
-
-HVA KAN GI NOT FULL RANK??
 \subsection{Current disturbance}
-When we only have current disturbance the system is still observable with full rank.  
+Examining the observability only counting the disturbances from the current, we see that all states affected by the disturbances disappear and we are left with $\psi$, $b$ and $r$ giving 
+\begin{equation}
+    \boldsymbol{A} = \begin{bmatrix}
+        0 & 1 & 0 \\
+        0 & -0.0138 & -0.0022 \\
+        0 & 0 & 0 
+    \end{bmatrix} \ , \ \boldsymbol{B} = \begin{bmatrix}
+        0 \\ 0.0022 \\ 0
+    \end{bmatrix}\ , \ \boldsymbol{E} = \begin{bmatrix}
+        0 & 0 \\
+        0 & 0 \\
+        0 & 1 
+    \end{bmatrix}
+\end{equation}
+\begin{equation}
+    \boldsymbol{C} = \begin{bmatrix} 
+        1 & 0 & 0 \\
+    \end{bmatrix}
+\end{equation}
+The observability matrix the becomes 
+\begin{equation}
+  \boldsymbol{\mathcal{O}} =
+  \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & -0.0138 & -0.0022 \\
+  \end{bmatrix}
+\end{equation}
+which has a rank equal to 3, meaning it is observable with full rank.
 
 \subsection{Wave disturbance}
-With only wave disturbance the system is observable with full rank.
+Examining the observability only counting the disturbances from the waves, we see that all states affected by the disturbances disappear and we are left with $\psi$, $\psi_w$, $\xi_w$ and $r$ giving 
+\begin{equation}
+    \boldsymbol{A} = \begin{bmatrix}
+        0 & 1 & 0 & 0 \\
+        -0.612 & -0.1095 & 0 & 0 \\
+        0 & 0 & 0 & 1 \\
+        0 & 0 & 0 & -0.0138
+    \end{bmatrix} \ , \ \boldsymbol{C} = \begin{bmatrix} 
+        0 & 1 & 1 & 0 \\
+    \end{bmatrix}
+\end{equation}
+with observability matrix as 
+\begin{equation}
+  \boldsymbol{\mathcal{O}} =
+  \begin{bmatrix}
+    0 & 1 & 1 & 0 \\
+    -0.612 & -0.1095 & 0 & 1 \\
+    0.067 & -0.6 & 0 & -0.0138 \\
+    0.3672 & 0.1327 & 0 & 0.0002 \\
+  \end{bmatrix}
+\end{equation}
+which from we can easily observe that the rank is equal to 4, making the system observable with full rank. 
 
-\subsection{Wave and current disturbances}
-Using all the disturbances the system has $rank = 5$ and is observable.
+
+\subsection{Wave and current disturbances}\label{sec:part4.5}
+Using both disturbances and the state space matrices in \cref{eq:ss_with_dist1} and \cref{eq:ss_with_dist2} we have the observability matrix as 
+\begin{equation}
+  \boldsymbol{\mathcal{O}} =
+  \begin{bmatrix}
+    0 & 1 & 1 & 0 & 0 \\
+    -0.612 & -0.1095 & 0 & 1 & 0 \\
+    0.067 & -0.6 & 0 & -0.0138 & -0.0022 \\
+    0.3672 & 0.1327 & 0 & 0.0002 & 0 \\
+    0.0812 & 0.3527 & 0 & 0 & 0 \\
+  \end{bmatrix}
+\end{equation}
+and the rank equal to 5, making the system observable with both wave and current disturbances. Having all there observability matrices with full rank means that its is possible to estimate the state from the output for each of them. This in turn means that making a Kalman filter is possible for all weather conditions. 

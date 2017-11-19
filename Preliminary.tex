@@ -28,7 +28,7 @@ where
     \item $\boldsymbol{\eta}$ - is the vector of NED positions $[x \ y \ \psi]$, where $x$ is the position in the north direction, $y$ is the position in the east-direction, and $\psi$  is the angle between the north direction and the $x_b$ axis. $\psi$ is positive clockwise.
     \item $\boldsymbol{\nu}$ - is the vector of BODY velocities $[u \ v \ r]$. Where $u$ is the velocity in the x-direction, $v$ the velocity in the y-direction and $r$ is rotation velocity about the z-axis.
 \end{itemize}
-The disturbances we will implement in our system are waves and current. \todo{og white noise?} The waves are considered to be high-frequency disturbances, while the current is a slowly varying disturbance. The waves representation corresponds to a spectral factorization of the wave spectrum and cam be modelled as a damped harmonic oscillator
+The disturbances we will implement in our system are waves and current. The waves are considered to be high-frequency disturbances (white noise), while the current is a slowly varying disturbance. The waves representation corresponds to a spectral factorization of the wave spectrum and cam be modelled as a damped harmonic oscillator
 \begin{equation*}
     \begin{bmatrix}
         \dot{x}_{w1}\\
